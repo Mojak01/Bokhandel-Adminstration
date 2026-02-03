@@ -3,5 +3,5 @@
 var storeService = new StoreService();
 
 
-await storeService.LäggTillBokIButikAsync();
+await storeService.TaBortBokFrånButikAsync();
 

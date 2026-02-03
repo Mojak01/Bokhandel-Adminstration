@@ -73,6 +73,35 @@ namespace BokhandelAdminstration.Services
 
             Console.WriteLine("Boken har lagts till i butiken.");
         }
+
+        //TA BORT BÖCKER FRÅN BUTIKERNA
+        public async Task TaBortBokFrånButikAsync()
+        {
+            // Visa alla butiker
+            var butiker = await _context.Butikers.ToListAsync();
+
+            Console.WriteLine("Välj butik (skriv siffran):");
+            foreach (var butik in butiker)
+            {
+                Console.WriteLine($"{butik.Id}: {butik.Butiksnamn}");
+            }
+
+            int butikId = int.Parse(Console.ReadLine());
+
+            // Hämta lagersaldo för vald butik
+            var lagerPoster = await _context.LagerSaldos
+                .Include(ls => ls.Isbn13Navigation)
+                .Where(ls => ls.ButikId == butikId)
+                .ToListAsync();
+
+            if (lagerPoster.Count == 0)
+            {
+                Console.WriteLine("Det finns inga böcker i denna butik.");
+                return;
+            }
+
+
+        }
     }
 }
 
