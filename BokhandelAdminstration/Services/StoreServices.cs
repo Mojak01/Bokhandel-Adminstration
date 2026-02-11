@@ -77,7 +77,7 @@ namespace BokhandelAdminstration.Services
         //TA BORT BÖCKER FRÅN BUTIKERNA
         public async Task TaBortBokFrånButikAsync()
         {
-            // Visa alla butiker
+            
             var butiker = await _context.Butikers.ToListAsync();
 
             Console.WriteLine("Välj butik (skriv siffran):");
@@ -88,7 +88,7 @@ namespace BokhandelAdminstration.Services
 
             int butikId = int.Parse(Console.ReadLine());
 
-            // Hämta lagersaldo för vald butik
+            
             var lagerPoster = await _context.LagerSaldos
                 .Include(ls => ls.Isbn13Navigation)
                 .Where(ls => ls.ButikId == butikId)
@@ -101,9 +101,38 @@ namespace BokhandelAdminstration.Services
             }
 
 
+            Console.WriteLine("Välj bok att ta bort (skriv ISBN):");
+            foreach (var lager in lagerPoster)
+            {
+                Console.WriteLine($"{lager.Isbn13}: {lager.Isbn13Navigation.Titel}");
+            }
+
+            string isbn = Console.ReadLine();
+
+
+            var lagerRad = await _context.LagerSaldos
+                .FirstOrDefaultAsync(ls => ls.ButikId == butikId && ls.Isbn13 == isbn);
+
+            if (lagerRad == null)
+            {
+                Console.WriteLine("Boken hittades inte i lagret.");
+                return;
+            }
+
+
+            _context.LagerSaldos.Remove(lagerRad);
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine("Boken har tagits bort från butiken.");
         }
+
+
+
     }
+
+
 }
+
 
 
 
