@@ -1,4 +1,5 @@
 ﻿using BokhandelAdminstration.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BokhandelAdminstration.Services
 {
@@ -24,6 +25,50 @@ namespace BokhandelAdminstration.Services
 
             Console.WriteLine("Ange utgivningsdatum (yyyy-mm-dd):");
             DateTime utgivningsdatum = DateTime.Parse(Console.ReadLine());
+
+            var förlag = await _context.Förlags.ToListAsync();
+            Console.WriteLine("Välj Förlag:");
+            foreach (var f in förlag)
+            {
+                Console.WriteLine($"{f.Id}: {f.Namn}");
+            }
+            int förlagId = int.Parse(Console.ReadLine());
+
+            var kategorier = await _context.Kategoriers.ToListAsync();
+            Console.WriteLine("Välj Kategori:");
+            foreach (var k in kategorier)
+            {
+                Console.WriteLine($"{k.Id}: {k.Namn}");
+            }
+            int kategoriId = int.Parse(Console.ReadLine());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
+
     }
 }
