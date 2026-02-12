@@ -7,4 +7,6 @@
 
 var bookService = new Bookservices();
 
-await bookService.SkapaNyBokAsync();
+//await bookService.SkapaNyBokAsync();
+
+await bookService.UppdateraBokAsync();

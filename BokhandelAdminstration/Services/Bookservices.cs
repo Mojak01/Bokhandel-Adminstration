@@ -99,8 +99,28 @@ namespace BokhandelAdminstration.Services
 
             string isbn = Console.ReadLine();
 
+            var bokAttUppdatera = await _context.Böckers
+                .FirstOrDefaultAsync(b => b.Isbn13 == isbn);
 
+            if (bokAttUppdatera == null)
+            {
+                Console.WriteLine("Boken hittades inte.");
+                return;
+            }
+
+            Console.WriteLine("Ny titel:");
+            bokAttUppdatera.Titel = Console.ReadLine();
+
+            Console.WriteLine("Nytt pris:");
+            bokAttUppdatera.Pris = decimal.Parse(Console.ReadLine());
+
+            Console.WriteLine("Nytt utgivningsdatum (yyyy-mm-dd):");
+            bokAttUppdatera.Utgivningsdatum = DateOnly.Parse(Console.ReadLine());
+
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine("Boken har uppdaterats.");
         }
-
     }
+
 }
