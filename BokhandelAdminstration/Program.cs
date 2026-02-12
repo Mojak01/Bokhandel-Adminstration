@@ -1,7 +1,10 @@
 ﻿using BokhandelAdminstration.Services;
 
-var storeService = new StoreService();
+//var storeService = new StoreService();
 
 
-await storeService.LäggTillBokIButikAsync();
+//await storeService.LäggTillBokIButikAsync();
 
+var bookService = new Bookservices();
+
+await bookService.SkapaNyBokAsync();

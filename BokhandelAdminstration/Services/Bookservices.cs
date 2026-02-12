@@ -20,12 +20,14 @@ namespace BokhandelAdminstration.Services
             Console.WriteLine("Ange titel:");
             string titel = Console.ReadLine();
 
+            Console.WriteLine("Ange språk:");
+            string språk = Console.ReadLine();
+
             Console.WriteLine("Ange pris:");
             decimal pris = decimal.Parse(Console.ReadLine());
 
             Console.WriteLine("Ange utgivningsdatum (yyyy-mm-dd):");
-            DateTime utgivningsdatum = DateTime.Parse(Console.ReadLine());
-
+            DateOnly utgivningsdatum = DateOnly.Parse(Console.ReadLine());
             var förlag = await _context.Förlags.ToListAsync();
             Console.WriteLine("Välj Förlag:");
             foreach (var f in förlag)
@@ -38,7 +40,7 @@ namespace BokhandelAdminstration.Services
             Console.WriteLine("Välj Kategori:");
             foreach (var k in kategorier)
             {
-                Console.WriteLine($"{k.Id}: {k.Namn}");
+                Console.WriteLine($"{k.Id}: {k.KategoriNamn}");
             }
             int kategoriId = int.Parse(Console.ReadLine());
 
@@ -47,6 +49,7 @@ namespace BokhandelAdminstration.Services
             {
                 Isbn13 = isbn,
                 Titel = titel,
+                Språk = språk,
                 Pris = pris,
                 Utgivningsdatum = utgivningsdatum,
                 FörlagId = förlagId,
@@ -59,7 +62,25 @@ namespace BokhandelAdminstration.Services
             Console.WriteLine("Boken skapades.");
 
 
+            var författare = await _context.Författares.ToListAsync();
 
+            Console.WriteLine("Välj författare (ID):");
+            foreach (var f in författare)
+            {
+                Console.WriteLine($"{f.Id}: {f.Förnamn} {f.Efternamn}");
+            }
+
+            int författareId = int.Parse(Console.ReadLine());
+
+            var valdFörfattare = await _context.Författares
+                .FirstOrDefaultAsync(f => f.Id == författareId);
+
+            if (valdFörfattare != null)
+            {
+                nyBok.Författares.Add(valdFörfattare);
+                await _context.SaveChangesAsync();
+                Console.WriteLine("Författare kopplad till boken.");
+            }
 
 
 
