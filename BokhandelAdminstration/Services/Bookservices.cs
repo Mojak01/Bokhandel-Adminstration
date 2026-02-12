@@ -56,6 +56,7 @@ namespace BokhandelAdminstration.Services
                 KategoriId = kategoriId
             };
 
+
             _context.Böckers.Add(nyBok);
             await _context.SaveChangesAsync();
 
@@ -83,25 +84,20 @@ namespace BokhandelAdminstration.Services
             }
 
 
+        }
 
+        public async Task UppdateraBokAsync()
+        {
+            var böcker = await _context.Böckers.ToListAsync();
 
+            Console.WriteLine("Välj bok att uppdatera (ISBN):");
 
+            foreach (var bok in böcker)
+            {
+                Console.WriteLine($"{bok.Isbn13}: {bok.Titel}");
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            string isbn = Console.ReadLine();
 
 
         }
