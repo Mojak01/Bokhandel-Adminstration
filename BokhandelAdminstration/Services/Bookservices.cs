@@ -43,6 +43,21 @@ namespace BokhandelAdminstration.Services
             int kategoriId = int.Parse(Console.ReadLine());
 
 
+            var nyBok = new Böcker
+            {
+                Isbn13 = isbn,
+                Titel = titel,
+                Pris = pris,
+                Utgivningsdatum = utgivningsdatum,
+                FörlagId = förlagId,
+                KategoriId = kategoriId
+            };
+
+            _context.Böckers.Add(nyBok);
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine("Boken skapades.");
+
 
 
 
