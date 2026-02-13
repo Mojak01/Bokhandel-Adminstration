@@ -49,5 +49,24 @@ namespace BokhandelAdminstration.Services
             Console.WriteLine("Författaren har uppdaterats.");
         }
 
+        public async Task TaBortFörfattareAsync()
+        {
+            await VisaAllaFörfattareAsync();
+
+            Console.WriteLine("Ange ID på författare att ta bort:");
+            int id = int.Parse(Console.ReadLine());
+
+            var författare = await _context.Författares
+                .Include(f => f.Isbn13s)
+                .FirstOrDefaultAsync(f => f.Id == id);
+
+            if (författare == null)
+            {
+                Console.WriteLine("Författare hittades inte.");
+                return;
+            }
+
+        }
+
     }
 }
