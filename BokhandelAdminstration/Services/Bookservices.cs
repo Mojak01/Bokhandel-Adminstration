@@ -121,6 +121,41 @@ namespace BokhandelAdminstration.Services
 
             Console.WriteLine("Boken har uppdaterats.");
         }
+
+        public async Task TaBortBokAsync()
+        {
+            var böcker = await _context.Böckers.ToListAsync();
+
+            Console.WriteLine("Välj bok att ta bort (ISBN):");
+
+            foreach (var bok in böcker)
+            {
+                Console.WriteLine($"{bok.Isbn13}: {bok.Titel}");
+            }
+
+            string isbn = Console.ReadLine();
+
+
+            var bokAttTabort = await _context.Böckers
+                .Include(b => b.Författares)
+                .FirstOrDefaultAsync(b => b.Isbn13 == isbn);
+
+            if (bokAttTabort == null)
+            {
+
+                Console.WriteLine("Boken hittades inte.");
+                return;
+            }
+
+
+            _context.Böckers.Remove(bokAttTabort);
+            await _context.SaveChangesAsync();
+
+
+            Console.WriteLine("Boken har tagits bort.");
+
+        }
+
     }
 
 }
