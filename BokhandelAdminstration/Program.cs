@@ -13,4 +13,4 @@ var bookService = new Bookservices();
 
 var authorService = new AuthorServices();
 
-await authorService.TaBortFörfattareAsync();
+await authorService.SkapaFörfattareAsync();

@@ -75,5 +75,36 @@ namespace BokhandelAdminstration.Services
 
         }
 
+        public async Task SkapaFörfattareAsync()
+        {
+            Console.WriteLine("Ange förnamn:");
+            string förnamn = Console.ReadLine();
+
+            Console.WriteLine("Ange efternamn:");
+            string efternamn = Console.ReadLine();
+
+            Console.WriteLine("Ange födelsedatum (yyyy-mm-dd):");
+            string datumInput = Console.ReadLine();
+
+            DateOnly? födelsedatum = null;
+
+            if (!string.IsNullOrWhiteSpace(datumInput))
+            {
+                födelsedatum = DateOnly.Parse(datumInput);
+            }
+
+            var nyFörfattare = new Författare
+            {
+                Förnamn = förnamn,
+                Efternamn = efternamn,
+                Födelsedatum = födelsedatum
+            };
+
+            _context.Författares.Add(nyFörfattare);
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine("Ny författare har skapats.");
+        }
+
     }
 }
