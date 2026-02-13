@@ -66,6 +66,13 @@ namespace BokhandelAdminstration.Services
                 return;
             }
 
+            författare.Isbn13s.Clear();
+
+            _context.Författares.Remove(författare);
+            await _context.SaveChangesAsync();
+
+            Console.WriteLine("Författaren har tagits bort.");
+
         }
 
     }
