@@ -9,4 +9,8 @@ var bookService = new Bookservices();
 
 //await bookService.SkapaNyBokAsync();
 
-await bookService.UppdateraBokAsync();
+//await bookService.UppdateraBokAsync();
+
+var authorService = new AuthorServices();
+
+await authorService.UppdateraFörfattareAsync();
