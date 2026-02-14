@@ -138,6 +138,8 @@ namespace BokhandelAdminstration.Services
 
             var bokAttTabort = await _context.Böckers
                 .Include(b => b.Författares)
+                .Include(b => b.LagerSaldos)
+                .Include(b => b.Beställningsraders)
                 .FirstOrDefaultAsync(b => b.Isbn13 == isbn);
 
             if (bokAttTabort == null)
@@ -147,6 +149,11 @@ namespace BokhandelAdminstration.Services
                 return;
             }
 
+            bokAttTabort.Författares.Clear();
+
+            _context.LagerSaldos.RemoveRange(bokAttTabort.LagerSaldos);
+
+            _context.Beställningsraders.RemoveRange(bokAttTabort.Beställningsraders);
 
             _context.Böckers.Remove(bokAttTabort);
             await _context.SaveChangesAsync();

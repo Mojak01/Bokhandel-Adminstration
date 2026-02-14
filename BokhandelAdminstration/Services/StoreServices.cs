@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 namespace BokhandelAdminstration.Services
 {
 
-    public class StoreService
+    public class StoreServices
     {
         private readonly BookStoreContext _context;
 
-        public StoreService()
+        public StoreServices()
         {
             _context = new BookStoreContext();
         }
